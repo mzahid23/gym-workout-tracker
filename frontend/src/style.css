@@ -1,0 +1,95 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f8;
+  color: #1f2937;
+}
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  background: #111827;
+  color: white;
+  font-weight: 600;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+}
+textarea { min-height: 80px; resize: vertical; }
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+.auth-card { max-width: 420px; width: 100%; }
+.link-btn {
+  background: transparent;
+  color: #111827;
+  padding-left: 0;
+  margin-top: 8px;
+}
+.app-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+header h1 { margin-bottom: 4px; }
+header p { margin-top: 0; color: #6b7280; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.stats-grid strong { font-size: 28px; }
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.set-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.chart-box { width: 100%; height: 330px; }
+.workout-card {
+  border-top: 1px solid #e5e7eb;
+  padding: 16px 0;
+}
+.workout-title-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+.workout-title-row h3 { margin: 0; }
+.workout-title-row span { color: #6b7280; font-size: 14px; font-weight: normal; }
+.muted { color: #6b7280; }
+.error { color: #b91c1c; }
+@media (max-width: 800px) {
+  .grid, .stats-grid { grid-template-columns: 1fr; }
+  header { align-items: flex-start; gap: 12px; flex-direction: column; }
+}
