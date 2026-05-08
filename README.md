@@ -4,9 +4,9 @@ A full-stack fitness tracking web application built with React, Flask, and SQLAl
 
 ## Live Demo
 
-Frontend: YOUR_VERCEL_URL_HERE
+Frontend: https://gym-workout-tracker-6arobgc20-mzahid23s-projects.vercel.app/
 
-Backend API: YOUR_RENDER_URL_HERE
+Backend API: https://gym-workout-tracker-api-baa1.onrender.com
 
 > Note: The backend is hosted on Render free tier and may take a few seconds to wake up after inactivity.
 
