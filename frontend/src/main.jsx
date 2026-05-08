@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import './style.css';
 
-const API_URL = 'http://localhost:5001/api';
+const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
