@@ -1,66 +1,118 @@
 # Workout Progress Tracker
 
-A full-stack workout tracking app that lets users create an account, log workouts, track sets/reps/weight, view workout history, and see basic progress stats.
+A full-stack fitness tracking web application built with React, Flask, and SQLAlchemy that allows users to log workouts, track progress, monitor workout volume, and manage exercise history through a modern responsive dashboard.
 
-## Features
+## Live Demo
 
-- User registration and login
-- Password hashing with Flask-Bcrypt
-- JWT-based authentication
-- Log workouts by date, title, exercise, sets, reps, and weight
-- View recent workout history
+Frontend: YOUR_VERCEL_URL_HERE
+
+Backend API: YOUR_RENDER_URL_HERE
+
+> Note: The backend is hosted on Render free tier and may take a few seconds to wake up after inactivity.
+
+---
+
+# Features
+
+- User authentication (register/login)
+- Secure JWT-based authentication
+- Workout tracking
+- Exercise logging
+- Set/reps/weight tracking
+- Workout history dashboard
+- Workout volume analytics
+- Dynamic progress charts
+- Responsive modern UI
+- Workout templates (Push/Pull/Legs)
 - Delete workouts
-- Dashboard cards for total workouts, sets, and training volume
-- Bar chart showing workout volume over time
-- SQLite database for local development
+- Notes for workouts
 
-## Tech Stack
+---
 
-**Frontend:** React, Vite, Recharts, CSS  
-**Backend:** Python, Flask, SQLAlchemy, Flask-JWT-Extended  
-**Database:** SQLite
+# Screenshots
 
-## Project Structure
+## Login Screen
+
+![Login Screen](screenshots/login_screen.png)
+
+---
+
+## Create Account Screen
+
+![Create Account](screenshots/create_account_screen.png)
+
+---
+
+## Dashboard / Home Screen
+
+![Home Screen](screenshots/home_screen.png)
+
+---
+
+## Recent Workouts
+
+![Recent Workouts](screenshots/recent_workouts.png)
+
+---
+
+# Technologies Used
+
+## Frontend
+- React
+- Vite
+- Recharts
+- CSS3
+
+## Backend
+- Flask
+- Flask-JWT-Extended
+- Flask-SQLAlchemy
+- Flask-Bcrypt
+- Flask-CORS
+
+## Database
+- SQLite
+
+## Deployment
+- Vercel
+- Render
+
+---
+
+# Project Structure
 
 ```text
-workout-tracker-app/
-  backend/
-    app/
-      __init__.py
-      models.py
-      routes.py
-    requirements.txt
-    run.py
-    .env.example
-  frontend/
-    src/
-      main.jsx
-      style.css
-    package.json
-    index.html
+gym-workout-tracker/
+├── backend/
+├── frontend/
+├── screenshots/
+├── README.md
 ```
 
-## How to Run Locally
+---
 
-### 1. Start the backend
+# Running Locally
+
+## Clone Repository
+
+```bash
+git clone https://github.com/mzahid23/gym-workout-tracker.git
+cd gym-workout-tracker
+```
+
+---
+
+## Backend Setup
 
 ```bash
 cd backend
-python3 -m venv venv
-source venv/bin/activate
 pip install -r requirements.txt
-python run.py
+gunicorn "app:create_app()"
 ```
 
-The backend runs on:
+---
 
-```text
-http://localhost:5001
-```
-
-### 2. Start the frontend
-
-Open a second terminal:
+## Frontend Setup
 
 ```bash
 cd frontend
@@ -68,29 +120,46 @@ npm install
 npm run dev
 ```
 
-The frontend usually runs on:
+---
 
-```text
-http://localhost:5173
+# Environment Variables
+
+Frontend `.env`:
+
+```env
+VITE_API_URL=YOUR_BACKEND_URL
 ```
 
-## API Endpoints
+---
 
-```text
-POST   /api/auth/register
-POST   /api/auth/login
-GET    /api/exercises
-GET    /api/workouts
-POST   /api/workouts
-DELETE /api/workouts/:id
-GET    /api/stats
-```
+# Concepts Learned
 
-## Future Improvements
+This project strengthened understanding of:
 
-- Add multiple exercises per workout from the frontend
-- Add workout templates like Push/Pull/Legs
-- Add bodyweight tracking
-- Add personal record charts for each exercise
-- Deploy backend and frontend online
-- Add PostgreSQL for production deployment
+- Full-stack web development
+- REST API integration
+- Authentication systems
+- Database management
+- Frontend/backend communication
+- Deployment workflows
+- Responsive UI design
+- State management in React
+
+---
+
+# Future Improvements
+
+- Exercise search/filtering
+- Personal records tracking
+- Dark mode
+- Bodyweight tracking
+- Nutrition tracking
+- Calendar workout history
+- Social/community features
+- PostgreSQL production database
+
+---
+
+# Author
+
+Muhammad Zahid
