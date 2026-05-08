@@ -159,79 +159,236 @@ function App() {
   }
 
   return (
-    <main className="app-shell">
-      <header>
-        <div>
-          <h1>Workout Tracker</h1>
-          <p>Welcome, {user?.name}</p>
+  <main className="app-shell">
+    <header className="hero">
+      <div>
+        <h1>🏋️ Workout Tracker</h1>
+        <p className="welcome-text">
+          Welcome back, <strong>{user?.name}</strong>
+        </p>
+      </div>
+
+      <div className="header-actions">
+        <button
+          className="template-btn"
+          onClick={() =>
+            setWorkoutForm({
+              ...workoutForm,
+              title: 'Push Day'
+            })
+          }
+        >
+          Push
+        </button>
+
+        <button
+          className="template-btn"
+          onClick={() =>
+            setWorkoutForm({
+              ...workoutForm,
+              title: 'Pull Day'
+            })
+          }
+        >
+          Pull
+        </button>
+
+        <button
+          className="template-btn"
+          onClick={() =>
+            setWorkoutForm({
+              ...workoutForm,
+              title: 'Leg Day'
+            })
+          }
+        >
+          Legs
+        </button>
+
+        <button className="logout-btn" onClick={logout}>
+          Log Out
+        </button>
+      </div>
+    </header>
+
+    <section className="stats-grid">
+      <div className="card stat-card">
+        <h3>Total Workouts</h3>
+        <strong>{stats?.total_workouts ?? 0}</strong>
+      </div>
+
+      <div className="card stat-card">
+        <h3>Total Sets</h3>
+        <strong>{stats?.total_sets ?? 0}</strong>
+      </div>
+
+      <div className="card stat-card">
+        <h3>Total Volume</h3>
+        <strong>{stats?.total_volume ?? 0} lb</strong>
+      </div>
+
+      <div className="card stat-card">
+        <h3>Average Volume</h3>
+        <strong>
+          {stats?.total_workouts
+            ? Math.round(stats.total_volume / stats.total_workouts)
+            : 0}{' '}
+          lb
+        </strong>
+      </div>
+    </section>
+
+    <section className="grid">
+      <form className="card workout-form-card" onSubmit={saveWorkout}>
+        <h2>Add Workout</h2>
+
+        <input
+          placeholder="Workout title"
+          value={workoutForm.title}
+          onChange={e =>
+            setWorkoutForm({ ...workoutForm, title: e.target.value })
+          }
+        />
+
+        <input
+          type="date"
+          value={workoutForm.date}
+          onChange={e =>
+            setWorkoutForm({ ...workoutForm, date: e.target.value })
+          }
+        />
+
+        <select
+          value={workoutForm.exercise_id}
+          onChange={e =>
+            setWorkoutForm({
+              ...workoutForm,
+              exercise_id: e.target.value
+            })
+          }
+        >
+          {exercises.map(e => (
+            <option key={e.id} value={e.id}>
+              {e.name} — {e.muscle_group}
+            </option>
+          ))}
+        </select>
+
+        {workoutForm.sets.map((set, index) => (
+          <div className="set-row" key={index}>
+            <input
+              placeholder="Reps"
+              value={set.reps}
+              onChange={e => updateSet(index, 'reps', e.target.value)}
+            />
+
+            <input
+              placeholder="Weight"
+              value={set.weight}
+              onChange={e => updateSet(index, 'weight', e.target.value)}
+            />
+
+            <button
+              type="button"
+              className="remove-btn"
+              onClick={() => {
+                const updated = workoutForm.sets.filter((_, i) => i !== index);
+
+                setWorkoutForm({
+                  ...workoutForm,
+                  sets: updated.length
+                    ? updated
+                    : [{ reps: '', weight: '' }]
+                });
+              }}
+            >
+              ✕
+            </button>
+          </div>
+        ))}
+
+        <textarea
+          placeholder="Workout notes..."
+          value={workoutForm.notes}
+          onChange={e =>
+            setWorkoutForm({ ...workoutForm, notes: e.target.value })
+          }
+        />
+
+        {error && <p className="error">{error}</p>}
+
+        <div className="form-actions">
+          <button type="button" onClick={addSet}>
+            Add Set
+          </button>
+
+          <button type="submit" className="primary-btn">
+            Save Workout
+          </button>
         </div>
-        <button onClick={logout}>Log Out</button>
-      </header>
+      </form>
 
-      <section className="stats-grid">
-        <div className="card"><h3>Total Workouts</h3><strong>{stats?.total_workouts ?? 0}</strong></div>
-        <div className="card"><h3>Total Sets</h3><strong>{stats?.total_sets ?? 0}</strong></div>
-        <div className="card"><h3>Total Volume</h3><strong>{stats?.total_volume ?? 0} lb</strong></div>
+      <section className="card chart-card">
+        <h2>Workout Volume Progress</h2>
+
+        <div className="chart-box">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={chartData}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="volume" radius={[8, 8, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </section>
+    </section>
 
-      <section className="grid">
-        <form className="card" onSubmit={saveWorkout}>
-          <h2>Add Workout</h2>
-          <input placeholder="Workout title" value={workoutForm.title} onChange={e => setWorkoutForm({ ...workoutForm, title: e.target.value })} />
-          <input type="date" value={workoutForm.date} onChange={e => setWorkoutForm({ ...workoutForm, date: e.target.value })} />
-          <select value={workoutForm.exercise_id} onChange={e => setWorkoutForm({ ...workoutForm, exercise_id: e.target.value })}>
-            {exercises.map(e => <option key={e.id} value={e.id}>{e.name} — {e.muscle_group}</option>)}
-          </select>
-          {workoutForm.sets.map((set, index) => (
-            <div className="set-row" key={index}>
-              <input placeholder="Reps" value={set.reps} onChange={e => updateSet(index, 'reps', e.target.value)} />
-              <input placeholder="Weight" value={set.weight} onChange={e => updateSet(index, 'weight', e.target.value)} />
+    <section className="card recent-workouts-card">
+      <h2>Recent Workouts</h2>
+
+      {workouts.length === 0 && (
+        <p className="muted">
+          No workouts yet. Add your first one above.
+        </p>
+      )}
+
+      {workouts.map(workout => (
+        <article className="workout-card" key={workout.id}>
+          <div className="workout-title-row">
+            <h3>
+              {workout.title}
+              <span>{workout.date}</span>
+            </h3>
+
+            <button
+              className="delete-btn"
+              onClick={() => deleteWorkout(workout.id)}
+            >
+              Delete
+            </button>
+          </div>
+
+          {workout.notes && <p>{workout.notes}</p>}
+
+          {workout.exercises.map(ex => (
+            <div className="exercise-block" key={ex.id}>
+              <strong>{ex.name}</strong>
+
+              <ul>
+                {ex.sets.map(s => (
+                  <li key={s.id}>
+                    Set {s.set_number}: {s.weight} lb × {s.reps}
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
-          <textarea placeholder="Notes" value={workoutForm.notes} onChange={e => setWorkoutForm({ ...workoutForm, notes: e.target.value })} />
-          {error && <p className="error">{error}</p>}
-          <button type="button" onClick={addSet}>Add Set</button>
-          <button type="submit">Save Workout</button>
-        </form>
-
-        <section className="card">
-          <h2>Workout Volume</h2>
-          <div className="chart-box">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData}>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="volume" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </section>
-      </section>
-
-      <section className="card">
-        <h2>Recent Workouts</h2>
-        {workouts.length === 0 && <p className="muted">No workouts yet. Add your first one above.</p>}
-        {workouts.map(workout => (
-          <article className="workout-card" key={workout.id}>
-            <div className="workout-title-row">
-              <h3>{workout.title} <span>{workout.date}</span></h3>
-              <button onClick={() => deleteWorkout(workout.id)}>Delete</button>
-            </div>
-            {workout.notes && <p>{workout.notes}</p>}
-            {workout.exercises.map(ex => (
-              <div key={ex.id}>
-                <strong>{ex.name}</strong>
-                <ul>
-                  {ex.sets.map(s => <li key={s.id}>Set {s.set_number}: {s.weight} lb x {s.reps}</li>)}
-                </ul>
-              </div>
-            ))}
-          </article>
-        ))}
-      </section>
-    </main>
-  );
+        </article>
+      ))}
+    </section>
+  </main>
+);
 }
 
 createRoot(document.getElementById('root')).render(<App />);
